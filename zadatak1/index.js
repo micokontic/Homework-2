@@ -1,12 +1,20 @@
 var form = document.getElementById("addForm");
 var itemList = document.getElementById("items");
 var filter = document.getElementById("filter");
+var suggestionList = document.getElementById('suggestion')
+
+
 // Form submit event
 form.addEventListener("submit", addItem);
 // Delete event
 itemList.addEventListener("click", removeItem);
 // Filter event
 filter.addEventListener("keyup", filterItems);
+// Filter event update sugesstion
+filter.addEventListener("keyup",updateSuggestionList);
+//SuggestionList update
+suggestionList.addEventListener('click',suggestionClickUpdate);
+
 // Add item
 function addItem(e) {
   e.preventDefault();
@@ -19,7 +27,7 @@ function addItem(e) {
   // Add text node with input value
   li.appendChild(document.createTextNode(newItem));
   // Create del button element
-  var deleteBtn = document.createElemt("button");
+  var deleteBtn = document.createElement("button");
   // Add classes to del button
   deleteBtn.className = "btn btn-danger btn-sm float-right delete";
   // Append text node
@@ -57,4 +65,42 @@ function filterItems(e) {
       item.style.display = "none";
     }
   });
+}
+
+
+function updateSuggestionList(){
+  console.log('tu sam')
+  var text=filter.value;
+  var items=itemList.getElementsByTagName("li");
+  suggestionList.innerHTML='';
+  if(text){
+    Array.from(items).map((item)=>{
+      var itemName=item.firstChild.textContent;
+      if(itemName.toLowerCase().indexOf(text.toLowerCase())===0){
+        var optionElement=document.createElement('h4')
+        optionElement.innerHTML=itemName;
+        suggestionList.appendChild(optionElement);
+      }
+    })
+  }
+
+}
+
+function suggestionClickUpdate(e){
+  filter.value=e.target.innerHTML;
+  updateSuggestionList();
+  suggestionList.innerHTML=" ";
+  text=filter.value;
+  var items=itemList.getElementsByTagName("li");
+  // Function filter items could not be used
+  // because it does not check complete match
+  Array.from(items).forEach(function(item) {
+    var itemName = item.firstChild.textContent;
+    if (itemName.toLowerCase() === text.toLowerCase()) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+
 }
