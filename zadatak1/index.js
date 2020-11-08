@@ -2,8 +2,10 @@ var form = document.getElementById("addForm");
 var itemList = document.getElementById("items");
 var filter = document.getElementById("filter");
 var suggestionList = document.getElementById('suggestion')
-
-
+//used to check if some item in itemList is already active;
+var initialActive=0;
+//load data from localStorage on page Load
+window.addEventListener('load', parseLocalStorage);
 // Form submit event
 form.addEventListener("submit", addItem);
 // Delete event
@@ -12,6 +14,8 @@ itemList.addEventListener("click", removeItem);
 filter.addEventListener("keyup", filterItems);
 // Filter event update sugesstion
 filter.addEventListener("keyup",updateSuggestionList);
+// Up and down arrow click selection
+filter.addEventListener("keyup",selectSuggestion)
 //SuggestionList update
 suggestionList.addEventListener('click',suggestionClickUpdate);
 
@@ -36,6 +40,8 @@ function addItem(e) {
   li.appendChild(deleteBtn);
   // Append li to list
   itemList.appendChild(li);
+  //update local storage
+  updateLocalStorage();
 }
 
 // Remove item
@@ -46,6 +52,7 @@ function removeItem(e) {
       itemList.removeChild(li);
     }
   }
+  updateLocalStorage();
 }
 
 // Filter items
@@ -67,9 +74,7 @@ function filterItems(e) {
   });
 }
 
-
 function updateSuggestionList(){
-  console.log('tu sam')
   var text=filter.value;
   var items=itemList.getElementsByTagName("li");
   suggestionList.innerHTML='';
@@ -102,5 +107,91 @@ function suggestionClickUpdate(e){
       item.style.display = "none";
     }
   });
+
+}
+
+function selectSuggestion(e){
+  console.log('brate2');
+  var suggestionListLength=Array.from(suggestionList.children).length;
+    if ((e.which == 38 || e.which==40) && initialActive==0) {
+      console.log('tu smo')
+      console.log(suggestionList.firstElementChild)
+      suggestionList.firstElementChild.classList.add('active');
+      initialActive=1;
+    }else{
+      if(e.which==38 || e.which==40){
+        suggestionList.querySelector(`h4:nth-child(${initialActive})`).classList.remove('active');
+        initialActive=setInitialActive(suggestionListLength,initialActive,e.which);
+        suggestionList.querySelector(`h4:nth-child(${initialActive})`).classList.add('active')
+      }else if(e.which==13){
+        enterResolve(initialActive);
+      }
+      else{
+        initialActive=0;
+      }
+    }
+    
+}
+
+//key direction code up=38 down=40
+ function setInitialActive(itemListLength,initialActive,keyDirection){
+   if(keyDirection==38){
+     if(initialActive-1<=0){
+       initialActive=itemListLength;
+     }
+     else{
+       initialActive--;
+     }
+   }
+   else{
+     if(initialActive+1>itemListLength){
+       initialActive=1;
+     }else{
+       initialActive++
+     }
+   }
+   return initialActive;
+ }
+
+function enterResolve(initialActive){
+  filter.value=suggestionList.querySelector(`h4:nth-child(${initialActive})`).innerHTML;
+  updateSuggestionList();
+  suggestionList.innerHTML=" ";
+  text=filter.value;
+  var items=itemList.getElementsByTagName("li");
+  // Function filter items could not be used
+  // because it does not check complete match
+  Array.from(items).forEach(function(item) {
+    var itemName = item.firstChild.textContent;
+    if (itemName.toLowerCase() === text.toLowerCase()) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+  initialActive=0;
+}
+
+function updateLocalStorage(){
+  var itemsArray=Array.from(itemList.children).map((item)=>{
+    return(item.childNodes[0].nodeValue)
+})
+localStorage.setItem("itemsArray",JSON.stringify(itemsArray))
+}
+
+function parseLocalStorage(){
+var itemsArray=JSON.parse(localStorage.getItem("itemsArray"));
+console.log(itemsArray);
+itemsArray.map((item)=>{
+var li=document.createElement('li');
+li.classList='list-group-item';
+var delButton=document.createElement('button')
+delButton.appendChild(document.createTextNode('X'));
+delButton.classList="btn btn-danger btn-sm float-right delete";
+li.appendChild(document.createTextNode(item))
+li.appendChild(delButton);
+itemList.appendChild(li);
+})
+
 
 }
