@@ -180,17 +180,17 @@ localStorage.setItem("itemsArray",JSON.stringify(itemsArray))
 }
 
 function parseLocalStorage(){
-var itemsArray=JSON.parse(localStorage.getItem("itemsArray"));
-console.log(itemsArray);
-itemsArray.map((item)=>{
-var li=document.createElement('li');
-li.classList='list-group-item';
-var delButton=document.createElement('button')
-delButton.appendChild(document.createTextNode('X'));
-delButton.classList="btn btn-danger btn-sm float-right delete";
-li.appendChild(document.createTextNode(item))
-li.appendChild(delButton);
-itemList.appendChild(li);
+  var itemsArray=JSON.parse(localStorage.getItem("itemsArray"));
+  console.log(itemsArray);
+  itemsArray.map((item)=>{
+  var li=document.createElement('li');
+  li.classList='list-group-item';
+  var delButton=document.createElement('button')
+  delButton.appendChild(document.createTextNode('X'));
+  delButton.classList="btn btn-danger btn-sm float-right delete";
+  li.appendChild(document.createTextNode(item))
+  li.appendChild(delButton);
+  itemList.appendChild(li);
 })
 
 
