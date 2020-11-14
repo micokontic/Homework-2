@@ -1,0 +1,57 @@
+body{
+    width: 70%;
+    margin: 0 auto;
+}
+.header-button-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 5vh;
+}
+
+.header-button-container button{
+    background-color:#4c94cb;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.header-button-container button:hover{
+    background-color: #2a6592;
+}
+
+#time-controls{
+    display: none;
+}
+.control-buttons{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5vh;
+    width: 50%;
+    margin: 10vh auto;
+    justify-content: center;
+}
+
+.control-buttons button{
+    padding: 10%;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+h1{
+    font-size: 7rem;
+    font-family: Roboto;
+    text-align: center;
+}
+
+#start{
+    background-color: green;
+}
+#stop{
+    background-color: red;
+}
+#reset{
+    color: black;
+}
