@@ -30,14 +30,14 @@ function handleClick(e){
             playerOneSpan.innerHTML=(playerOne);
             setTimeout(function () {window.alert("Player 1 wins!");
             resetGame();
-        }, 1);
+        }, 100);
             
         }else if(checkWinner(inputMatrix)===-1){
             playerTwo++;
             playerTwoSpan.innerHTML=(playerTwo);
             setTimeout(function () {window.alert("Player 2 wins!");
             resetGame();
-        }, 1);
+        }, 100);
             
         }
         num++;
