@@ -42,7 +42,9 @@ function handleClick(e){
         }
         num++;
         if(num===9){
+            setTimeout(function () {window.alert("It's a draw!");
             resetGame();
+        }, 100);
         }
     }
     console.log(inputMatrix);
