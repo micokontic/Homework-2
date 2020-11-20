@@ -93,7 +93,7 @@ function sayHowdy() {
   
   // UNCOMMENT THESE TO TEST YOUR WORK!
      const countLogger = delayCounter(3, 1000)
-     countLogger();
+    //countLogger();
   // After 1 second, log 1
   // After 2 seconds, log 2
   // After 3 seconds, log 3
@@ -101,19 +101,24 @@ function sayHowdy() {
   /* CHALLENGE 8 */
   
   function promised (val) {
-    // ADD CODE HERE
-  }
+  let promise = new Promise((resolve,reject)=>{
+    setTimeout(() => {
+      resolve(val)
+    }, 2000);
+  })
+  return promise;
+}
   
   // UNCOMMENT THESE TO TEST YOUR WORK!
-  // const createPromise = promised('wait for it...');
-  // createPromise.then((val) => console.log(val)); 
+   const createPromise = promised('wait for it...');
+   //createPromise.then((val) => console.log(val)); 
   // will log "wait for it..." to the console after 2 seconds
   
   /* CHALLENGE 9 */
   
   class SecondClock {
     constructor(cb) {
-      // ADD CODE HERE
+      // NISMO RADILI KLASE!
     }
     // ADD METHODS HERE
   }
@@ -129,16 +134,39 @@ function sayHowdy() {
   
   /* CHALLENGE 10 */
   
-  function debounce(callback, interval) {
-    // ADD CODE HERE
-  }
+  const debounce = (func, wait) => {
+    let timeout;
+    let firstTime=true;
+    let canCallback=false;
+    return ()=>{
+      function setInt(){
+        timeout=setTimeout(()=>{
+          canCallback=true;
+        },wait)
+      }
+      if(firstTime){
+        firstTime=false;
+        setInt();
+        return func();
+      }
+      else{
+        if(canCallback){
+          canCallback=false;
+          return func();
+        }else{
+          clearInterval(timeout);
+          setInt();
+        }
+      }
+    }
+  };
   
   // UNCOMMENT THESE TO TEST YOUR WORK!
-  // function giveHi() { return 'hi'; }
-  // const giveHiSometimes = debounce(giveHi, 3000);
-  // console.log(giveHiSometimes()); // -> 'hi'
-  // setTimeout(function() { console.log(giveHiSometimes()); }, 2000); // -> undefined
-  // setTimeout(function() { console.log(giveHiSometimes()); }, 4000); // -> undefined
-  // setTimeout(function() { console.log(giveHiSometimes()); }, 8000); // -> 'hi'
+   function giveHi() { return 'hi' }
+   const giveHiSometimes = debounce(giveHi, 3000);
+   console.log(giveHiSometimes()); // -> 'hi'
+   setTimeout(function() { console.log(giveHiSometimes()); }, 2000); // -> undefined
+   setTimeout(function() { console.log(giveHiSometimes()); }, 4000); // -> undefined
+   setTimeout(function() { console.log(giveHiSometimes()); }, 8000); // -> 'hi'
   
   
