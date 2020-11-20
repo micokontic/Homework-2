@@ -1,0 +1,93 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --colorOne:rgb(40, 51, 74);
+    --colorTwo:#FBDE44FF;
+    --colorThree:rgb(73, 96, 145);
+}
+body{
+    font-family: 'Inter', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calc-container{
+    width: 30vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    background-color: var(--colorThree);
+    padding: 2vh;
+    padding-top: 4vh;
+    border-radius: 1vh;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+#display{
+    grid-area:1 /2 / span 1/ span 4;
+    cursor: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1vw;
+    color: var(--colorTwo);
+    font-size: 2.3rem;
+}
+
+.box{
+    background-color: var(--colorOne);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.9rem;
+    font-weight: bold;
+    border-radius: 5%;
+    margin: 1vh;
+    padding: 4vh 0.2vw;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: 0.3 ease-out;
+}
+.del, .del1{
+    padding: 1.5vh 0.2vw;
+}
+
+.box:active{
+    background-color: rgb(26, 32, 47);
+}
+
+.eql{
+    grid-column: 4/6;
+    
+}
+
+@media screen and (max-width: 1200px) {
+    .calc-container{
+        width: 40vw;}
+  }
+
+  @media screen and (max-width: 800px) {
+    .box{
+        
+        margin: 0.5vh;
+        padding: 2vh 0.1vw;
+        
+    }
+    .calc-container{
+        width: 50vw;}
+  }
+
+  @media screen and (max-width: 600px) {
+    .calc-container{
+        width: 60vw;}
+  }
+  @media screen and (max-width: 400px) {
+    .calc-container{
+        width: 90vw;}
+  }
